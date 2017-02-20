@@ -1,0 +1,31 @@
+<html>
+<head>
+<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+<style>
+#map { height: 90%; }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+var southWest = L.latLng(-60, -180),
+    northEast = L.latLng(84, 180),
+    bounds = L.latLngBounds(southWest, northEast);
+var map = L.map('map', {
+  maxBounds: bounds
+}).fitWorld();
+
+map.on('click', function(ev) {
+    console.log(ev.latlng);
+});
+
+L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
+    minZoom: 2,
+    maxZoom: 18,
+    bounds: bounds,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+}).addTo(map);
+</script>
+</body>
+</html>
