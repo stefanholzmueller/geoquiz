@@ -1,8 +1,8 @@
 <html>
 <head>
 <meta charset="utf-8"/>
-<script src="http://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
-<link rel="stylesheet" href="http://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
 <style>
 #map { height: 80%; cursor: crosshair; }
 #asked { color: red; }
@@ -42,11 +42,9 @@ var httpGet = function(baseUrl, queryParams, callback) {
 }
 
 map.on('click', function(ev) {
-  var lat = ev.latlng.lat;
-  var lng = ev.latlng.lng;
-  httpGet('http://api.geonames.org/countryCode', { lang: 'en', lat, lng, radius: 10, type: 'json', username: 'geoquiz' }, function callback(response) {
-    var country = JSON.parse(response);
-    var countryName = country.countryName;
+  httpGet('https://nominatim.openstreetmap.org/reverse', { format: 'json', lang: 'en', lat: ev.latlng.lat, lon: ev.latlng.lng, zoom: 3 }, function callback(response) {
+    var json = JSON.parse(response);
+    var countryName = json.address.country;
     if (countryName === askedCountryName) {
       alert('You correctly located ' + countryName + '. Good job!');
       randomize();
@@ -60,7 +58,7 @@ L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
   minZoom: 2,
   maxZoom: 18,
   bounds: bounds,
-  attribution: '&copy;<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy;<a href="http://cartodb.com/attributions">CartoDB</a> &copy;<a href="http://www.geonames.org">GeoNames</a>'
+  attribution: '&copy;<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy;<a href="https://cartodb.com/attributions">CartoDB</a>'
 }).addTo(map);
 </script>
 </body>
