@@ -43,6 +43,15 @@ function getJson(baseUrl, queryParams, callback) {
   return fetch(buildUrl(baseUrl, queryParams)).then(response => response.json());
 }
 
+function popupSnackbar(message) {
+  document.querySelector('#snackbar').MaterialSnackbar.showSnackbar({
+//    actionText: 'Show',
+//    actionHandler: function(){}
+    message: message,
+    timeout: 4000
+  });
+}
+
 map.on('click', function(ev) {
   getJson('https://nominatim.openstreetmap.org/reverse', { format: 'json', lang: 'en', lat: ev.latlng.lat, lon: ev.latlng.lng, zoom: 3 }).then(function(json) {
     if (json.error) {
@@ -50,10 +59,10 @@ map.on('click', function(ev) {
     } else {
       var countryName = json.address.country;
       if (countryName === state.target) {
-        alert('You correctly located ' + countryName + '. Good job!');
+        popupSnackbar('You correctly located ' + countryName + '. Good job!');
         randomize();
       } else {
-        alert('You clicked on ' + (countryName || 'the sea') + ', not ' + state.target + '. Try again!');
+        popupSnackbar('You clicked on ' + (countryName || 'the sea') + ', not ' + state.target + '. Try again!');
       }
     }
   })
