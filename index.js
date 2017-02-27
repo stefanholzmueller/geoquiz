@@ -12,27 +12,65 @@ L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_nolabels/{
   attribution: '&copy;<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy;<a href="https://cartodb.com/attributions">CartoDB</a>'
 }).addTo(map);
 
-
-var countryNames = countries.map(place => place.address.country);
+var shuffledCountries = shuffle(countries);
 var state = {
-  target: randomElement(countryNames)
+  target: shuffledCountries.pop(),
+  tries: 0
 }
 
 function render() {
-  Object.keys(state).forEach(function(key) {
-    const value = state[key];
-    document.getElementById(key).textContent = value;
+  document.getElementById('target').textContent = showCountryName(state.target.address.country);
+}
+
+map.on('click', function(ev) {
+  const queryParams = { format: 'json', lang: 'en', lat: ev.latlng.lat, lon: ev.latlng.lng, zoom: 3 };
+  getJson('https://nominatim.openstreetmap.org/reverse', queryParams).then(function(place) {
+    if (place.error) {
+      console.log('reverse geocoding error: ' + place.error);
+    } else {
+      var countryName = place.address.country;
+      if (countryName === state.target.address.country) {
+        popupSnackbar('You correctly located ' + showCountryName(countryName) + '. Good job!');
+        randomize();
+      } else {
+        popupSnackbar('You clicked on ' + showCountryName(countryName || 'the sea') + ', not ' + showCountryName(state.target.address.country) + '. Try again!');
+      }
+    }
   })
+});
+
+function showCountryName(countryName) {
+  switch (countryName) {
+    case "Democratic Republic of the Congo": return "Congo";
+    case "RDPA": return "Algeria";
+    case "RSA": return "South Africa";
+    case "Russian Federation": return "Russia";
+    default: return countryName;
+  }
 }
 
 function randomize() {
-  state.target = randomElement(countryNames);
+  if (shuffledCountries.length > 0) {
+    state.target = shuffledCountries.pop();
+  } else {
+    alert('Game over!');
+  }
   render();
 }
 randomize();
 
-function randomElement(array) {
-  return array[Math.floor(Math.random()*array.length)];
+function shuffle(array) {
+    let counter = array.length;
+
+    while (counter > 0) {
+        let index = Math.floor(Math.random() * counter);
+        counter--;
+        let temp = array[counter];
+        array[counter] = array[index];
+        array[index] = temp;
+    }
+
+    return array;
 }
 
 function buildUrl(baseUrl, queryParams) {
@@ -48,22 +86,6 @@ function popupSnackbar(message) {
 //    actionText: 'Show',
 //    actionHandler: function(){}
     message: message,
-    timeout: 4000
+    timeout: 3000
   });
 }
-
-map.on('click', function(ev) {
-  getJson('https://nominatim.openstreetmap.org/reverse', { format: 'json', lang: 'en', lat: ev.latlng.lat, lon: ev.latlng.lng, zoom: 3 }).then(function(json) {
-    if (json.error) {
-      console.log('reverse geocoding error: ' + json.error);
-    } else {
-      var countryName = json.address.country;
-      if (countryName === state.target) {
-        popupSnackbar('You correctly located ' + countryName + '. Good job!');
-        randomize();
-      } else {
-        popupSnackbar('You clicked on ' + (countryName || 'the sea') + ', not ' + state.target + '. Try again!');
-      }
-    }
-  })
-});
