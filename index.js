@@ -30,21 +30,38 @@ map.on('click', function(ev) {
     if (place.error) {
       console.log('reverse geocoding error: ' + place.error);
     } else {
-      var countryName = place.address.country;
+      const countryName = place.address.country;
       if (countryName === state.target.address.country) {
         const correctLocation = showCountryName(countryName);
         const popupText = `You correctly located <span class="correct">${correctLocation}</span>. Good job!`;
         popup = L.popup().setLatLng(latlng).setContent(popupText).openOn(map);
+        displayCountryShape(countryName, 'green');
         randomize();
       } else {
         const incorrectLocation = showCountryName(countryName || 'the sea');
         const targetLocation = showCountryName(state.target.address.country);
         const popupText = `You clicked on <span class="incorrect">${incorrectLocation}</span>, not ${targetLocation}. Try again!`;
         popup = L.popup().setLatLng(latlng).setContent(popupText).openOn(map);
+        displayCountryShape(countryName, 'red');
       }
     }
   })
 });
+
+function displayCountryShape(countryName, color) {
+  const queryParams = { country: countryName, format: 'json', polygon_geojson: '1' };
+  getJson('https://nominatim.openstreetmap.org/search', queryParams).then(function(place) {
+    if (place[0]) {
+      var geojson = {
+        "type": "Feature",
+        "geometry": place[0].geojson
+      };
+      L.geoJSON(geojson).setStyle({ color: color, fillColor: color, opacity: 0.7, weight: 1 }).addTo(map);
+    } else {
+      console.log('cannot display shape of country: ' + countryName);
+    }
+  });
+}
 
 function showCountryName(countryName) {
   switch (countryName) {
