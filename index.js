@@ -1,9 +1,10 @@
-var southWest = L.latLng(-62, -180),
+const southWest = L.latLng(-62, -180),
     northEast = L.latLng(84, 180),
     bounds = L.latLngBounds(southWest, northEast);
-var map = L.map('map', {
+const map = L.map('map', {
   maxBounds: bounds
 }).fitWorld();
+var popup;
 
 L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_nolabels/{z}/{x}/{y}.png', {
   minZoom: 2,
@@ -12,8 +13,8 @@ L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_nolabels/{
   attribution: '&copy;<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy;<a href="https://cartodb.com/attributions">CartoDB</a>'
 }).addTo(map);
 
-var shuffledCountries = shuffle(countries);
-var state = {
+const shuffledCountries = shuffle(countries);
+const state = {
   target: shuffledCountries.pop(),
   tries: 0
 }
@@ -23,17 +24,23 @@ function render() {
 }
 
 map.on('click', function(ev) {
-  const queryParams = { format: 'json', lang: 'en', lat: ev.latlng.lat, lon: ev.latlng.lng, zoom: 3 };
+  const latlng = ev.latlng;
+  const queryParams = { format: 'json', lang: 'en', lat: latlng.lat, lon: latlng.lng, zoom: 3 };
   getJson('https://nominatim.openstreetmap.org/reverse', queryParams).then(function(place) {
     if (place.error) {
       console.log('reverse geocoding error: ' + place.error);
     } else {
       var countryName = place.address.country;
       if (countryName === state.target.address.country) {
-        popupSnackbar('You correctly located ' + showCountryName(countryName) + '. Good job!');
+        const correctLocation = showCountryName(countryName);
+        const popupText = `You correctly located <span class="correct">${correctLocation}</span>. Good job!`;
+        popup = L.popup().setLatLng(latlng).setContent(popupText).openOn(map);
         randomize();
       } else {
-        popupSnackbar('You clicked on ' + showCountryName(countryName || 'the sea') + ', not ' + showCountryName(state.target.address.country) + '. Try again!');
+        const incorrectLocation = showCountryName(countryName || 'the sea');
+        const targetLocation = showCountryName(state.target.address.country);
+        const popupText = `You clicked on <span class="incorrect">${incorrectLocation}</span>, not ${targetLocation}. Try again!`;
+        popup = L.popup().setLatLng(latlng).setContent(popupText).openOn(map);
       }
     }
   })
@@ -83,8 +90,6 @@ function getJson(baseUrl, queryParams, callback) {
 
 function popupSnackbar(message) {
   document.querySelector('#snackbar').MaterialSnackbar.showSnackbar({
-//    actionText: 'Show',
-//    actionHandler: function(){}
     message: message,
     timeout: 3000
   });
