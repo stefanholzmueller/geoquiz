@@ -25,7 +25,7 @@ function render() {
 
 map.on('click', function(ev) {
   const latlng = ev.latlng;
-  const queryParams = { format: 'json', lang: 'en', lat: latlng.lat, lon: latlng.lng, zoom: 3 };
+  const queryParams = { 'accept-language': 'en', format: 'json', lat: latlng.lat, lon: latlng.lng, zoom: 3 };
   getJson('https://nominatim.openstreetmap.org/reverse', queryParams).then(function(place) {
     if (place.error) {
       console.log('reverse geocoding error: ' + place.error);
@@ -49,12 +49,12 @@ map.on('click', function(ev) {
 });
 
 function displayCountryShape(countryName, color) {
-  const queryParams = { country: countryName, format: 'json', polygon_geojson: '1' };
+  const queryParams = { 'accept-language': 'en', country: countryName, format: 'json', lang: 'en', polygon_geojson: '1' };
   getJson('https://nominatim.openstreetmap.org/search', queryParams).then(function(place) {
     if (place[0]) {
       var geojson = {
-        "type": "Feature",
-        "geometry": place[0].geojson
+        type: 'Feature',
+        geometry: place[0].geojson
       };
       L.geoJSON(geojson).setStyle({ color: color, fillColor: color, opacity: 0.7, weight: 1 }).addTo(map);
     } else {
