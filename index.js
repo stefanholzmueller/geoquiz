@@ -50,15 +50,18 @@ map.on('click', function(ev) {
 
 function displayCountryShape(countryName, color) {
   const queryParams = { 'accept-language': 'en', country: countryName, format: 'json', lang: 'en', polygon_geojson: '1' };
-  getJson('https://nominatim.openstreetmap.org/search', queryParams).then(function(place) {
-    if (place[0]) {
+  getJson('https://nominatim.openstreetmap.org/search', queryParams).then(function(places) {
+    const shapes = places.filter(function(place) {
+      return place.geojson.type.endsWith("Polygon");
+    });
+    if (shapes[0]) {
       var geojson = {
         type: 'Feature',
-        geometry: place[0].geojson
+        geometry: shapes[0].geojson
       };
       L.geoJSON(geojson).setStyle({ color: color, fillColor: color, opacity: 0.7, weight: 1 }).addTo(map);
     } else {
-      console.log('cannot display shape of country: ' + countryName);
+      console.log(`cannot display shape of country: ${countryName}`, places);
     }
   });
 }
@@ -69,6 +72,7 @@ function showCountryName(countryName) {
     case "RDPA": return "Algeria";
     case "RSA": return "South Africa";
     case "Russian Federation": return "Russia";
+    case "Territorial waters of Faroe Islands": return "Faroe Islands";
     default: return countryName;
   }
 }
