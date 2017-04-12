@@ -40,7 +40,8 @@ map.on('click', function(ev) {
       } else {
         const incorrectLocation = normalizeCountryName(countryName || 'the sea');
         const targetLocation = normalizeCountryName(state.target.address.country);
-        const popupText = `You clicked on <span class="incorrect">${incorrectLocation}</span>, not ${targetLocation}. Try again!`;
+        const distance = Math.round(L.latLng(state.target.lat, state.target.lon).distanceTo(latlng) / 1000)
+        const popupText = `You clicked on <span class="incorrect">${incorrectLocation}</span>, not ${targetLocation}. Try again!<br><span class="hint">Hint: ${targetLocation} is approximately ${distance} km away.</span>`;
         popup = L.popup().setLatLng(latlng).setContent(popupText).openOn(map);
         displayCountryShape(countryName, 'red');
       }
