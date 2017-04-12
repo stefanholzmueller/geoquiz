@@ -20,7 +20,7 @@ const state = {
 }
 
 function render() {
-  document.getElementById('target').textContent = showCountryName(state.target.address.country);
+  document.getElementById('target').textContent = normalizeCountryName(state.target.address.country);
 }
 
 map.on('click', function(ev) {
@@ -32,14 +32,14 @@ map.on('click', function(ev) {
     } else {
       const countryName = place.address.country;
       if (countryName === state.target.address.country) {
-        const correctLocation = showCountryName(countryName);
+        const correctLocation = normalizeCountryName(countryName);
         const popupText = `You correctly located <span class="correct">${correctLocation}</span>. Good job!`;
         popup = L.popup().setLatLng(latlng).setContent(popupText).openOn(map);
         displayCountryShape(countryName, 'green');
         randomize();
       } else {
-        const incorrectLocation = showCountryName(countryName || 'the sea');
-        const targetLocation = showCountryName(state.target.address.country);
+        const incorrectLocation = normalizeCountryName(countryName || 'the sea');
+        const targetLocation = normalizeCountryName(state.target.address.country);
         const popupText = `You clicked on <span class="incorrect">${incorrectLocation}</span>, not ${targetLocation}. Try again!`;
         popup = L.popup().setLatLng(latlng).setContent(popupText).openOn(map);
         displayCountryShape(countryName, 'red');
@@ -66,13 +66,19 @@ function displayCountryShape(countryName, color) {
   });
 }
 
-function showCountryName(countryName) {
+function normalizeCountryName(countryName) {
   switch (countryName) {
+    case "Czechia": return "Czech Republic";
     case "Democratic Republic of the Congo": return "Congo";
+    case "Guam": return "United States of America";
     case "RDPA": return "Algeria";
     case "RSA": return "South Africa";
     case "Russian Federation": return "Russia";
+    case "SBA": return "Akrotiri and Dhekelia";
+    case "Sint Maarten": return "The Netherlands";
+    case "South Ossetia": return "Georgia";
     case "Territorial waters of Faroe Islands": return "Faroe Islands";
+    case "Turkish Republic Of Northern Cyprus": return "Cyprus";
     default: return countryName;
   }
 }
