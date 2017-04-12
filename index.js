@@ -30,7 +30,7 @@ map.on('click', function(ev) {
     if (place.error) {
       console.log('reverse geocoding error: ' + place.error);
     } else {
-      const countryName = place.address.country;
+      const countryName = normalizeCountryName(place.address.country);
       if (countryName === state.target.address.country) {
         const correctLocation = normalizeCountryName(countryName);
         const popupText = `You correctly located <span class="correct">${correctLocation}</span>. Good job!`;
