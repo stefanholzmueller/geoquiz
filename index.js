@@ -1,13 +1,11 @@
 const bounds = L.latLngBounds(L.latLng(-62, -180), L.latLng(84, 180));
-const map = L.map('map', {
-  maxBounds: bounds
-}).fitWorld();
+const map = L.map('map').fitWorld();
 var popup;
 
 L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_nolabels/{z}/{x}/{y}.png', {
   minZoom: 2,
   maxZoom: 18,
-  bounds: bounds,
+  reuseTiles: true,
   attribution: '&copy;<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy;<a href="https://cartodb.com/attributions">CartoDB</a>'
 }).addTo(map);
 L.control.scale().addTo(map);
