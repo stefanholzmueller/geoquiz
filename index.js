@@ -1,6 +1,4 @@
-const southWest = L.latLng(-62, -180),
-    northEast = L.latLng(84, 180),
-    bounds = L.latLngBounds(southWest, northEast);
+const bounds = L.latLngBounds(L.latLng(-62, -180), L.latLng(84, 180));
 const map = L.map('map', {
   maxBounds: bounds
 }).fitWorld();
@@ -12,6 +10,7 @@ L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_nolabels/{
   bounds: bounds,
   attribution: '&copy;<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy;<a href="https://cartodb.com/attributions">CartoDB</a>'
 }).addTo(map);
+L.control.scale().addTo(map);
 
 const shuffledCountries = shuffle(countries);
 const state = {
