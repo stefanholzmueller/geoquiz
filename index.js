@@ -1,8 +1,11 @@
 const bounds = L.latLngBounds(L.latLng(-62, -180), L.latLng(84, 180));
-const map = L.map('map').fitWorld();
+const map = L.map('map', {
+  maxBounds: bounds
+}).fitWorld();
 var popup;
 
 L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_nolabels/{z}/{x}/{y}.png', {
+  bounds: bounds,
   minZoom: 2,
   maxZoom: 18,
   reuseTiles: true,
