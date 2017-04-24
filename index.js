@@ -74,6 +74,7 @@ function normalizeCountryName(countryName) {
     case "RDPA": return "Algeria";
     case "RSA": return "South Africa";
     case "Russian Federation": return "Russia";
+    case "Sahrawi Arab Democratic Republic": return "Morocco";
     case "SBA": return "Akrotiri and Dhekelia";
     case "Sint Maarten": return "The Netherlands";
     case "South Ossetia": return "Georgia";
