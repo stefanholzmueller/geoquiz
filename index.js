@@ -15,13 +15,20 @@ L.control.scale().addTo(map);
 
 const shuffledCountries = shuffle(countries);
 const state = {
-  target: shuffledCountries.pop(),
-  tries: 0
+  target: shuffledCountries.pop()
 }
 
-function render() {
+function randomize() {
+  if (shuffledCountries.length > 0) {
+    state.target = shuffledCountries.pop();
+  } else {
+    alert('Game over!');
+  }
   document.getElementById('target').textContent = normalizeCountryName(state.target.address.country);
 }
+randomize();
+
+document.getElementById('skip').onclick = randomize;
 
 map.on('click', function(ev) {
   const latlng = ev.latlng;
@@ -80,19 +87,11 @@ function normalizeCountryName(countryName) {
     case "South Ossetia": return "Georgia";
     case "Territorial waters of Faroe Islands": return "Faroe Islands";
     case "Turkish Republic Of Northern Cyprus": return "Cyprus";
+    case "North Macedonia": return "Macedonia";
+    case "Netherlands": return "The Netherlands";
     default: return countryName;
   }
 }
-
-function randomize() {
-  if (shuffledCountries.length > 0) {
-    state.target = shuffledCountries.pop();
-  } else {
-    alert('Game over!');
-  }
-  render();
-}
-randomize();
 
 function shuffle(array) {
     let counter = array.length;
@@ -114,11 +113,4 @@ function buildUrl(baseUrl, queryParams) {
 
 function getJson(baseUrl, queryParams, callback) {
   return fetch(buildUrl(baseUrl, queryParams)).then(response => response.json());
-}
-
-function popupSnackbar(message) {
-  document.querySelector('#snackbar').MaterialSnackbar.showSnackbar({
-    message: message,
-    timeout: 3000
-  });
 }
