@@ -1,0 +1,46 @@
+#map {
+    height: 100vh;
+    cursor: crosshair;
+}
+.country-name,
+.correct {
+    color: green;
+    font-weight: bold;
+}
+
+.incorrect {
+    color: red;
+}
+
+.hint {
+    color: grey;
+}
+/*Titles*/
+body{
+    margin: 0;
+}
+h1,h2,h3,h4,h5,h6{
+    text-align: center;
+}
+/*temp*/
+body>div:first-of-type{
+    display: none;
+} /*end temp*/
+
+body>div:nth-child(2){
+    margin: auto;
+    padding: 1%;
+    background-color: #d4dadc;}
+h3{
+    margin: 0;
+    font-family: sans-serif;
+    font-weight: normal;
+}
+button{
+    cursor: pointer;
+    font-size: initial;
+    text-decoration: underline;
+    background-color: inherit;
+    border-style: none;
+    padding: 0;
+}
