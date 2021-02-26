@@ -1,5 +1,5 @@
 #map {
-    height: 100vh;
+    height: 95vh;
     cursor: crosshair;
 }
 .country-name,
@@ -18,23 +18,54 @@
 /*Titles*/
 body{
     margin: 0;
+    height: 100vh;
+    background: url(mapamundi.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 h1,h2,h3,h4,h5,h6{
     text-align: center;
+    font-family: sans-serif;
+    font-weight: normal;
 }
-/*temp*/
+/*Start page*/
+.intro{
+    cursor: pointer;
+    height: 50vh;
+    width: 50vw;
+    position: absolute;
+    top: 25%;
+    right: 25%;
+    border-radius: 25vmin;
+    background-color: white;
+    box-shadow: 0 0 5vmin 0 #7e7e7e;
+}
+.intro>h1{
+    position: absolute;
+    top: 25%;
+    left: 10%;
+    height: 25%;
+    width: 80%;
+}.intro>h2{
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    height: 25%;
+    width: 80%;
+}
+/*temp
 body>div:first-of-type{
     display: none;
 } /*end temp*/
-
-body>div:nth-child(2){
-    margin: auto;
-    padding: 1%;
-    background-color: #d4dadc;}
+/*Game*/
+.question{
+    height: 5vh;
+    background-color: #d4dadc;
+}
 h3{
     margin: 0;
-    font-family: sans-serif;
-    font-weight: normal;
+    padding-top: 1vh;
 }
 button{
     cursor: pointer;

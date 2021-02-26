@@ -3,24 +3,15 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <script src="countries.js"></script>
-    <script defer src="index.js"></script>
     <link rel="stylesheet" href="geoquiz.css" />
     <title>GeoQuiz</title>
 </head>
 
 <body>
-    <div>
+    <div class="intro" onclick="window.location.href='game.html'">
         <h1>GeoQuiz - The Game</h1>
         <h2>Test your geography knowledge!</h2>
     </div>
-    <div>
-        <h3>Locate and click on <span id="target" class="country-name"></span> or <button id="skip">skip</button></h3>
-    </div>
-    <div id="map"></div>
-
 </body>
 
 </html>
