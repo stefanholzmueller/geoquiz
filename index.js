@@ -89,6 +89,7 @@ function normalizeCountryName(countryName) {
     case "Turkish Republic Of Northern Cyprus": return "Cyprus";
     case "North Macedonia": return "Macedonia";
     case "Netherlands": return "The Netherlands";
+    case "Mindanao": return "Philippines";
     default: return countryName;
   }
 }
