@@ -1,6 +1,6 @@
-const bounds = L.latLngBounds(L.latLng(-62, -180), L.latLng(84, 180));
+const bounds = L.latLngBounds(L.latLng(-64, -180), L.latLng(84, 180));
 const map = L.map('map', {
-  maxBounds: bounds
+ maxBounds: bounds
 }).fitWorld();
 var popup;
 

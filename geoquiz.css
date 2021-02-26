@@ -1,5 +1,5 @@
 #map {
-    height: 95vh;
+    height: 100vh;
     cursor: crosshair;
 }
 .country-name,
@@ -24,6 +24,11 @@ body{
     background-size: cover;
     background-position: center;
 }
+body.start{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 h1,h2,h3,h4,h5,h6{
     text-align: center;
     font-family: sans-serif;
@@ -32,40 +37,31 @@ h1,h2,h3,h4,h5,h6{
 /*Start page*/
 .intro{
     cursor: pointer;
-    height: 50vh;
-    width: 50vw;
-    position: absolute;
-    top: 25%;
-    right: 25%;
-    border-radius: 25vmin;
+    padding: 8vmin;
     background-color: white;
+    border-radius: 25vmin;
     box-shadow: 0 0 5vmin 0 #7e7e7e;
+    align-items: center;
 }
 .intro>h1{
-    position: absolute;
-    top: 25%;
-    left: 10%;
-    height: 25%;
-    width: 80%;
-}.intro>h2{
-    position: absolute;
-    top: 50%;
-    left: 10%;
-    height: 25%;
-    width: 80%;
+    color: green;
+    font-weight: bold;
 }
-/*temp
-body>div:first-of-type{
-    display: none;
-} /*end temp*/
+
 /*Game*/
 .question{
-    height: 5vh;
-    background-color: #d4dadc;
+    width: 50vw;
+    position: absolute;
+    left: 25vw;
+    border-bottom-left-radius: 1em;
+    border-bottom-right-radius: 1em;
+    background-color: white;
+    box-shadow: 0 0 2vmin 0 #7e7e7e;
+    z-index: 800;
 }
 h3{
     margin: 0;
-    padding-top: 1vh;
+    padding: 0.3em .5em;
 }
 button{
     cursor: pointer;
