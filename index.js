@@ -48,7 +48,6 @@ map.on('click', function(ev) {
         const distance = Math.round(L.latLng(state.target.lat, state.target.lon).distanceTo(latlng) / 1000)
         const popupText = `You clicked on <span class="incorrect">${incorrectLocation}</span>, not ${targetCountry}. Try again!<br><span class="hint">Hint: ${targetCountry} is approximately ${distance} km away.</span>`;
         popup = L.popup().setLatLng(latlng).setContent(popupText).openOn(map);
-        displayCountryShape(countryName, 'red');
       }
     }
   })
