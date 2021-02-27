@@ -86,7 +86,7 @@ function normalizeCountryName(countryName) {
     case "South Ossetia": return "Georgia";
     //case "Territorial waters of Faroe Islands": return "Faroe Islands";
     case "Turkish Republic Of Northern Cyprus": return "Cyprus";
-    case "North Macedonia": return "Macedonia";
+    //case "North Macedonia": return "Macedonia";
     case "Mindanao": return "Philippines";
     case "Luzon": return "Philippines";
     case "Visayas": return "Philippines";
