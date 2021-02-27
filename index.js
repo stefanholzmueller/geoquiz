@@ -15,39 +15,52 @@ L.control.scale().addTo(map);
 
 const shuffledCountries = shuffle(countries);
 const state = {
-  target: null
+  target: null,
+  correct: 0,
+  wrong: 0,
+  skipped: 0
 }
 
 function nextTarget() {
   if (shuffledCountries.length > 0) {
     state.target = shuffledCountries.pop();
   } else {
-    alert('Game over!');
+    alert(`Game over! You found all ${state.correct} countries, with ${state.wrong} incorrect guesses, and you skipped ${state.skipped} countries.`);
   }
   document.getElementById('target').textContent = normalizeCountryName(state.target.address.country);
+  console.log(`You found ${state.correct} countries, with ${state.wrong} incorrect guesses, and you skipped ${state.skipped} countries.`);
 }
 nextTarget();
 
-document.getElementById('skip').onclick = nextTarget;
+document.getElementById('skip').onclick = function() {
+  state.skipped++;
+  nextTarget();
+}
 
 map.on('click', function(ev) {
   const latlng = ev.latlng;
   const queryParams = { 'accept-language': 'en', format: 'json', lat: latlng.lat, lon: latlng.lng, zoom: 3 };
   getJson('https://nominatim.openstreetmap.org/reverse', queryParams).then(function(place) {
-    if (place.error) {
-      console.log('reverse geocoding error: ' + place.error);
+    if (place.error === "Unable to geocode") {
+      popup = L.popup().setLatLng(latlng).setContent("Nothing here").openOn(map);
+    } else if (place.error) {
+      console.error('reverse geocoding error: ' + place.error);
     } else {
-      const countryName = normalizeCountryName(place.address.country);
+      const countryName = normalizeCountryName(place.address.country || place.display_name);
       const targetCountry = normalizeCountryName(state.target.address.country);
       if (countryName === targetCountry) {
         const popupText = `You correctly located <span class="correct">${targetCountry}</span>. Good job!`;
         popup = L.popup().setLatLng(latlng).setContent(popupText).openOn(map);
-        displayCountryShape(countryName, 'green').then(nextTarget);
+        displayCountryShape(countryName, 'green').then(function() {
+          state.correct++;
+          nextTarget();
+        });
       } else {
-        const incorrectLocation = normalizeCountryName(countryName || 'the sea');
+        const incorrectLocation = normalizeCountryName(countryName);
         const distance = Math.round(L.latLng(state.target.lat, state.target.lon).distanceTo(latlng) / 1000)
         const popupText = `You clicked on <span class="incorrect">${incorrectLocation}</span>, not ${targetCountry}. Try again!<br><span class="hint">Hint: ${targetCountry} is approximately ${distance} km away.</span>`;
         popup = L.popup().setLatLng(latlng).setContent(popupText).openOn(map);
+        state.wrong++;
       }
     }
   })
@@ -66,7 +79,7 @@ function displayCountryShape(countryName, color) {
       };
       L.geoJSON(geojson).setStyle({ color: color, fillColor: color, weight: 1 }).addTo(map);
     } else {
-      console.log(`cannot display shape of country: ${countryName}`, places);
+      console.error(`cannot display shape of country: ${countryName}`, places);
     }
   });
 }
