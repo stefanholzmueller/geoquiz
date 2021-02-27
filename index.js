@@ -13,20 +13,18 @@ L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/voya
 }).addTo(map);
 L.control.scale().addTo(map);
 
-//tests with polygons
-var polygon = L.polygon([
-  [51.509, -0.08],
-  [51.503, -0.06],
-  [51.51, -0.047]
-]).addTo(map);
-var circle = L.circle([0, 0], {
-  color: 'red',
-  fillColor: '#f03',
-  fillOpacity: 0.5,
-  radius: 500000
-}).addTo(map);
+//tests with polygons EEZ Pacific
 var geojsonLayer = new L.GeoJSON.AJAX("pacific.geojson");       
 geojsonLayer.addTo(map);
+
+var myStyle = {
+  "color": "#ff7800",
+  "weight": 1,
+  "opacity": 0
+};
+L.geoJSON(geojsonLayer, {
+  style: myStyle
+}).addTo(map);
 
 const shuffledCountries = shuffle(countries);
 const state = {
