@@ -7,17 +7,32 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="countries.js"></script>
     <script defer src="index.js"></script>
+    <script src="leaflet.ajax.min.js"></script>
     <link rel="stylesheet" href="geoquiz.css" />
     <title>GeoQuiz</title>
 </head>
 
 <body>
-    <!--<div>
-        <h1>GeoQuiz - The Game</h1>
-        <h2>Test your geography knowledge!</h2>
-    </div>-->
     <div class="question">
         <h3>Locate and click on <span id="target" class="country-name"></span> or <button id="skip">skip</button></h3>
+    </div>
+    <div class="score">
+        <table>
+            <thead>
+                <tr>
+                    <th>correct</th>
+                    <th>wrong</th>
+                    <th>skipped</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>120</td>
+                    <td>88</td>
+                    <td>50</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
     <div id="map"></div>
 

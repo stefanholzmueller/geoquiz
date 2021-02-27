@@ -4,7 +4,7 @@ const map = L.map('map', {
 }).fitWorld();
 var popup;
 
-L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_nolabels/{z}/{x}/{y}.png', {
+L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/voyager_nolabels/{z}/{x}/{y}.png', {
   bounds: bounds,
   minZoom: 2,
   maxZoom: 18,
@@ -12,6 +12,21 @@ L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_nolabels/{
   attribution: '&copy;<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy;<a href="https://cartodb.com/attributions">CartoDB</a>'
 }).addTo(map);
 L.control.scale().addTo(map);
+
+//tests with polygons
+var polygon = L.polygon([
+  [51.509, -0.08],
+  [51.503, -0.06],
+  [51.51, -0.047]
+]).addTo(map);
+var circle = L.circle([0, 0], {
+  color: 'red',
+  fillColor: '#f03',
+  fillOpacity: 0.5,
+  radius: 500000
+}).addTo(map);
+var geojsonLayer = new L.GeoJSON.AJAX("foo.geojson");       
+geojsonLayer.addTo(map);
 
 const shuffledCountries = shuffle(countries);
 const state = {
