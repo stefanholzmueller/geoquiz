@@ -18,7 +18,7 @@ const state = {
   target: shuffledCountries.pop()
 }
 
-function randomize() {
+function nextTarget() {
   if (shuffledCountries.length > 0) {
     state.target = shuffledCountries.pop();
   } else {
@@ -26,9 +26,9 @@ function randomize() {
   }
   document.getElementById('target').textContent = normalizeCountryName(state.target.address.country);
 }
-randomize();
+nextTarget();
 
-document.getElementById('skip').onclick = randomize;
+document.getElementById('skip').onclick = nextTarget;
 
 map.on('click', function(ev) {
   const latlng = ev.latlng;
@@ -42,8 +42,7 @@ map.on('click', function(ev) {
       if (countryName === targetCountry) {
         const popupText = `You correctly located <span class="correct">${targetCountry}</span>. Good job!`;
         popup = L.popup().setLatLng(latlng).setContent(popupText).openOn(map);
-        displayCountryShape(countryName, 'green');
-        randomize();
+        displayCountryShape(countryName, 'green').then(nextTarget);
       } else {
         const incorrectLocation = normalizeCountryName(countryName || 'the sea');
         const distance = Math.round(L.latLng(state.target.lat, state.target.lon).distanceTo(latlng) / 1000)
@@ -56,8 +55,8 @@ map.on('click', function(ev) {
 });
 
 function displayCountryShape(countryName, color) {
-  const queryParams = { 'accept-language': 'en', country: countryName, format: 'json', lang: 'en', polygon_geojson: '1' };
-  getJson('https://nominatim.openstreetmap.org/search', queryParams).then(function(places) {
+  const queryParams = { 'accept-language': 'en', country: countryName, format: 'json', lang: 'en', polygon_geojson: 1, polygon_threshold: 0.01 };
+  return getJson('https://nominatim.openstreetmap.org/search', queryParams).then(function(places) {
     const shapes = places.filter(function(place) {
       return place.geojson.type.endsWith("Polygon");
     });
