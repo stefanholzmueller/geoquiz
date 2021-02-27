@@ -1,4 +1,5 @@
 var countries = [
+  {"lat":"51.0834196","lon":"10.4234469","address":{"country":"Germany"}}, //manually added
   {"place_id":"158353799","osm_type":"relation","osm_id":"443174","lat":"12.7503486","lon":"122.7312101","display_name":"Philippines","address":{"country":"Philippines","country_code":"ph"},"boundingbox":["4.2158064","21.3217806","116.6879127","126.8072562"]},
   {"place_id":"129161","osm_type":"node","osm_id":"26347360","lat":"42.6384261","lon":"12.674297","display_name":"Italy","address":{"country":"Italy","country_code":"it"},"boundingbox":["27.6384261","57.6384261","-2.325703","27.674297"]},
   {"place_id":"135742","osm_type":"node","osm_id":"26847706","lat":"33.7680065","lon":"66.2385139","display_name":"Afghanistan","address":{"country":"Afghanistan","country_code":"af"},"boundingbox":["18.7680065","48.7680065","51.2385139","81.2385139"]},
