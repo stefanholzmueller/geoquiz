@@ -66,8 +66,11 @@ h3{
 button{
     cursor: pointer;
     font-size: initial;
-    text-decoration: underline;
-    background-color: inherit;
+/*    text-decoration: underline;
+    background-color: inherit;*/
+    background-color: green;
+    color: white;
     border-style: none;
-    padding: 0;
+    border-radius: .3em;
+    padding: .1em .4em .2em;
 }

@@ -74,22 +74,22 @@ function displayCountryShape(countryName, color) {
 
 function normalizeCountryName(countryName) {
   switch (countryName) {
-    case "Czechia": return "Czech Republic";
-    case "Democratic Republic of the Congo": return "Congo";
-    case "Guam": return "United States of America";
+    //case "Czechia": return "Czech Republic";
+    //case "Democratic Republic of the Congo": return "Congo";
+    //case "Guam": return "United States of America";
     case "RDPA": return "Algeria";
     case "RSA": return "South Africa";
-    case "Russian Federation": return "Russia";
-    case "Sahrawi Arab Democratic Republic": return "Morocco";
+    //case "Russian Federation": return "Russia";
+    //case "Sahrawi Arab Democratic Republic": return "Morocco";
     case "SBA": return "Akrotiri and Dhekelia";
     case "Sint Maarten": return "The Netherlands";
     case "South Ossetia": return "Georgia";
-    case "Territorial waters of Faroe Islands": return "Faroe Islands";
+    //case "Territorial waters of Faroe Islands": return "Faroe Islands";
     case "Turkish Republic Of Northern Cyprus": return "Cyprus";
     case "North Macedonia": return "Macedonia";
-    case "Netherlands": return "The Netherlands";
     case "Mindanao": return "Philippines";
-    case "United States": return "United States of America"
+    case "Luzon": return "Philippines";
+    case "Visayas": return "Philippines";
     default: return countryName;
   }
 }
