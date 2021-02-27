@@ -25,7 +25,7 @@ var circle = L.circle([0, 0], {
   fillOpacity: 0.5,
   radius: 500000
 }).addTo(map);
-var geojsonLayer = new L.GeoJSON.AJAX("foo.geojson");       
+var geojsonLayer = new L.GeoJSON.AJAX("pacific.geojson");       
 geojsonLayer.addTo(map);
 
 const shuffledCountries = shuffle(countries);
