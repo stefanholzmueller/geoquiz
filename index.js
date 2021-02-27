@@ -15,7 +15,7 @@ L.control.scale().addTo(map);
 
 const shuffledCountries = shuffle(countries);
 const state = {
-  target: shuffledCountries.pop()
+  target: null
 }
 
 function nextTarget() {
@@ -65,7 +65,7 @@ function displayCountryShape(countryName, color) {
         type: 'Feature',
         geometry: shapes[0].geojson
       };
-      L.geoJSON(geojson).setStyle({ color: color, fillColor: color, opacity: 0.7, weight: 1 }).addTo(map);
+      L.geoJSON(geojson).setStyle({ color: color, fillColor: color, weight: 1 }).addTo(map);
     } else {
       console.log(`cannot display shape of country: ${countryName}`, places);
     }
