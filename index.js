@@ -40,9 +40,15 @@ function nextTarget() {
     alert(`Game over! You found all ${state.correct} countries, with ${state.wrong} incorrect guesses, and you skipped ${state.skipped} countries.`);
   }
   document.getElementById('target').textContent = normalizeCountryName(state.target.address.country);
-  console.log(`You found ${state.correct} countries, with ${state.wrong} incorrect guesses, and you skipped ${state.skipped} countries.`);
+  updateUiState();
 }
 nextTarget();
+
+function updateUiState() {
+  document.getElementById('correct').textContent = state.correct;
+  document.getElementById('wrong').textContent = state.wrong;
+  document.getElementById('skipped').textContent = state.skipped;
+}
 
 document.getElementById('skip').onclick = function() {
   state.skipped++;
@@ -73,6 +79,7 @@ map.on('click', function(ev) {
         const popupText = `You clicked on <span class="incorrect">${incorrectLocation}</span>, not ${targetCountry}. Try again!<br><span class="hint">Hint: ${targetCountry} is approximately ${distance} km away.</span>`;
         popup = L.popup().setLatLng(latlng).setContent(popupText).openOn(map);
         state.wrong++;
+        updateUiState();
       }
     }
   })
