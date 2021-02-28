@@ -90,7 +90,7 @@ function displayCountryShape(countryName, color) {
   const queryParams = { 'accept-language': 'en', country: countryName, format: 'json', lang: 'en', polygon_geojson: 1, polygon_threshold: 0.01 };
   return getJson('https://nominatim.openstreetmap.org/search', queryParams).then(function(places) {
     const shapes = places.filter(function(place) {
-      return place.geojson.type.endsWith("Polygon");
+      return place.geojson.type.endsWith("Polygon") && place.display_name === countryName;
     });
     if (shapes[0]) {
       var geojson = {
