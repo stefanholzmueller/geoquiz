@@ -14,17 +14,16 @@ L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/voya
 L.control.scale().addTo(map);
 
 //tests with polygons EEZ Pacific
-var geojsonLayer = new L.GeoJSON.AJAX("pacific.geojson");       
-geojsonLayer.addTo(map);
+//var geojsonLayer = new L.GeoJSON.AJAX("pacific.geojson");       
+//geojsonLayer.addTo(map);
 
 var myStyle = {
-  "color": "#ff7800",
-  "weight": 1,
-  "opacity": 0
+  color: "blue",
+  weight: 1,
+  opacity: 1,
+  fill: "none"
 };
-L.geoJSON(geojsonLayer, {
-  style: myStyle
-}).addTo(map);
+L.geoJSON(pacific).setStyle(myStyle).addTo(map);
 
 const shuffledCountries = shuffle(countries);
 const state = {
