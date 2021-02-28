@@ -13,15 +13,12 @@ L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/voya
 }).addTo(map);
 L.control.scale().addTo(map);
 
-//tests with polygons EEZ Pacific
-//var geojsonLayer = new L.GeoJSON.AJAX("pacific.geojson");       
-//geojsonLayer.addTo(map);
-
 var myStyle = {
-  color: "blue",
+  color: "cornflowerblue",
   weight: 1,
   opacity: 1,
-  fill: "none"
+  fillOpacity: 0,
+  dashArray: '2, 5'
 };
 L.geoJSON(pacific).setStyle(myStyle).addTo(map);
 
