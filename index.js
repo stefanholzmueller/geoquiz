@@ -78,12 +78,16 @@ map.on('click', function(ev) {
         const distance = Math.round(L.latLng(state.target.lat, state.target.lon).distanceTo(latlng) / 1000)
         const popupText = `You clicked on <span class="incorrect">${incorrectLocation}</span>, not ${targetCountry}. Try again!<br><span class="hint">Hint: ${targetCountry} is approximately ${distance} km away.</span>`;
         popup = L.popup().setLatLng(latlng).setContent(popupText).openOn(map);
-        state.wrong++;
-        updateUiState();
+        displayCountryShape(countryName, 'red').then(function() {
+          state.wrong++;
+          updateUiState();
+        });
       }
     }
   })
 });
+
+var wrongShape;
 
 function displayCountryShape(countryName, color) {
   const queryParams = { 'accept-language': 'en', country: countryName, format: 'json', lang: 'en', polygon_geojson: 1, polygon_threshold: 0.01 };
@@ -96,7 +100,13 @@ function displayCountryShape(countryName, color) {
         type: 'Feature',
         geometry: shapes[0].geojson
       };
-      L.geoJSON(geojson).setStyle({ color: color, fillColor: color, weight: 1 }).addTo(map);
+      if (wrongShape) wrongShape.removeFrom(map);
+      if (color === 'green') {
+        L.geoJSON(geojson).setStyle({ color: color, fillColor: color, weight: 1 }).addTo(map);
+      } else if (color === 'red') {
+        wrongShape = L.geoJSON(geojson).setStyle({ color: color, fillColor: color, weight: 1 });
+        wrongShape.addTo(map);  
+      }
     } else {
       console.error(`cannot display shape of country: ${countryName}`, places);
     }
