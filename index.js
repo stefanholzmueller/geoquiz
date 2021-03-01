@@ -4,11 +4,11 @@ const map = L.map('map', {
 }).fitWorld();
 var popup;
 
+
 L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/voyager_nolabels/{z}/{x}/{y}.png', {
-  bounds: bounds,
+  //bounds: bounds,
   minZoom: 2,
   maxZoom: 18,
-  reuseTiles: true,
   attribution: '&copy;<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy;<a href="https://cartodb.com/attributions">CartoDB</a>'
 }).addTo(map);
 L.control.scale().addTo(map);
@@ -54,7 +54,7 @@ document.getElementById('skip').onclick = function() {
 
 map.on('click', function(ev) {
   const latlng = ev.latlng;
-  const queryParams = { 'accept-language': 'en', format: 'json', lat: latlng.lat, lon: latlng.lng, zoom: 3 };
+  const queryParams = { 'accept-language': 'en', format: 'json', lat: latlng.wrap().lat, lon: latlng.wrap().lng, zoom: 3 };
   getJson('https://nominatim.openstreetmap.org/reverse', queryParams).then(function(place) {
     if (place.error === "Unable to geocode") {
       popup = L.popup().setLatLng(latlng).setContent("Nothing here").openOn(map);
