@@ -1,4 +1,4 @@
-const bounds = L.latLngBounds(L.latLng(-64, -180), L.latLng(84, 180));
+const bounds = L.latLngBounds(L.latLng(-64, -180), L.latLng(84, 250));
 const map = L.map('map', {
  maxBounds: bounds
 }).fitWorld();
@@ -21,6 +21,7 @@ var myStyle = {
   dashArray: '2, 5'
 };
 L.geoJSON(pacific).setStyle(myStyle).addTo(map);
+L.geoJSON(pacific2).setStyle(myStyle).addTo(map);
 
 const shuffledCountries = shuffle(countries);
 const state = {

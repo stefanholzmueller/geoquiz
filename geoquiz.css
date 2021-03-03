@@ -83,8 +83,8 @@ button{
 }
 @media screen and (max-width:768px) {
     .score{
-        right: .5vmin;
-        top: 85vh;
+        right: .75vmin;
+        top: 78vh;
      }
 }
 table{
