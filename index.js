@@ -1,5 +1,17 @@
-
+const bounds = L.latLngBounds(L.latLng(-64, -180), L.latLng(84, 250));
+const map = L.map('map', {
+ maxBounds: bounds
+}).fitWorld();
 var popup;
+
+
+L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/voyager_nolabels/{z}/{x}/{y}.png', {
+  //bounds: bounds,
+  minZoom: 2,
+  maxZoom: 18,
+  attribution: '&copy;<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy;<a href="https://cartodb.com/attributions">CartoDB</a>'
+}).addTo(map);
+L.control.scale().addTo(map);
 
 var myStyle = {
   color: "cornflowerblue",
@@ -23,7 +35,7 @@ function nextTarget() {
   if (shuffledCountries.length > 0) {
     state.target = shuffledCountries.pop();
   } else {
-    alert(`Game over! Congratulations! \n You found all ${state.correct} countries, with ${state.wrong} incorrect guesses, and you skipped ${state.skipped} countries.`);
+    alert(`Game over! You found all ${state.correct} countries, with ${state.wrong} incorrect guesses, and you skipped ${state.skipped} countries.`);
   }
   document.getElementById('target').textContent = normalizeCountryName(state.target.address.country);
   updateUiState();
@@ -55,7 +67,7 @@ map.on('click', function(ev) {
       if (countryName === targetCountry) {
         const popupText = `You correctly located <span class="correct">${targetCountry}</span>. Good job!`;
         popup = L.popup().setLatLng(latlng).setContent(popupText).openOn(map);
-        displayCountryShape(countryName, 'darkviolet').then(function() {
+        displayCountryShape(countryName, 'green').then(function() {
           state.correct++;
           nextTarget();
         });
@@ -64,7 +76,7 @@ map.on('click', function(ev) {
         const distance = Math.round(L.latLng(state.target.lat, state.target.lon).distanceTo(latlng) / 1000)
         const popupText = `You clicked on <span class="incorrect">${incorrectLocation}</span>, not ${targetCountry}. Try again!<br><span class="hint">Hint: ${targetCountry} is approximately ${distance} km away.</span>`;
         popup = L.popup().setLatLng(latlng).setContent(popupText).openOn(map);
-        displayCountryShape(countryName, 'orangered').then(function() {
+        displayCountryShape(countryName, 'red').then(function() {
           state.wrong++;
           updateUiState();
         });
@@ -87,9 +99,9 @@ function displayCountryShape(countryName, color) {
         geometry: shapes[0].geojson
       };
       if (wrongShape) wrongShape.removeFrom(map);
-      if (color === 'darkviolet') {
+      if (color === 'green') {
         L.geoJSON(geojson).setStyle({ color: color, fillColor: color, weight: 1 }).addTo(map);
-      } else if (color === 'orangered') {
+      } else if (color === 'red') {
         wrongShape = L.geoJSON(geojson).setStyle({ color: color, fillColor: color, weight: 1 });
         wrongShape.addTo(map);  
       }
