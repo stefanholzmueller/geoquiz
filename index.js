@@ -1,4 +1,3 @@
-
 var popup;
 
 var myStyle = {
@@ -8,6 +7,14 @@ var myStyle = {
   fillOpacity: 0,
   dashArray: '2, 5'
 };
+
+const colori = ["red", "deeppink", "green", "darkcyan", "darkviolet", "blue", "dodgerblue", "gold", "orange"];
+function randomColor() {
+  const randomi = Math.floor(Math.random() * colori.length);
+  return colori[randomi];
+}
+console.log(randomColor())
+
 L.geoJSON(pacific).setStyle(myStyle).addTo(map);
 L.geoJSON(pacific2).setStyle(myStyle).addTo(map);
 
@@ -23,7 +30,7 @@ function nextTarget() {
   if (shuffledCountries.length > 0) {
     state.target = shuffledCountries.pop();
   } else {
-    alert(`Game over! Congratulations! \n You found all ${state.correct} countries, with ${state.wrong} incorrect guesses, and you skipped ${state.skipped} countries.`);
+    alert(`Congratulations! \n You found all ${state.correct} countries, with ${state.wrong} incorrect guesses, and you skipped ${state.skipped} countries.`);
   }
   document.getElementById('target').textContent = normalizeCountryName(state.target.address.country);
   updateUiState();
@@ -36,15 +43,15 @@ function updateUiState() {
   document.getElementById('skipped').textContent = state.skipped;
 }
 
-document.getElementById('skip').onclick = function() {
+document.getElementById('skip').onclick = function () {
   state.skipped++;
   nextTarget();
 }
 
-map.on('click', function(ev) {
+map.on('click', function (ev) {
   const latlng = ev.latlng;
   const queryParams = { 'accept-language': 'en', format: 'json', lat: latlng.wrap().lat, lon: latlng.wrap().lng, zoom: 3 };
-  getJson('https://nominatim.openstreetmap.org/reverse', queryParams).then(function(place) {
+  getJson('https://nominatim.openstreetmap.org/reverse', queryParams).then(function (place) {
     if (place.error === "Unable to geocode") {
       popup = L.popup().setLatLng(latlng).setContent("Nothing here").openOn(map);
     } else if (place.error) {
@@ -55,7 +62,7 @@ map.on('click', function(ev) {
       if (countryName === targetCountry) {
         const popupText = `You correctly located <span class="correct">${targetCountry}</span>. Good job!`;
         popup = L.popup().setLatLng(latlng).setContent(popupText).openOn(map);
-        displayCountryShape(countryName, 'darkviolet').then(function() {
+        displayCountryShape(countryName, randomColor()).then(function () {
           state.correct++;
           nextTarget();
         });
@@ -64,7 +71,7 @@ map.on('click', function(ev) {
         const distance = Math.round(L.latLng(state.target.lat, state.target.lon).distanceTo(latlng) / 1000)
         const popupText = `You clicked on <span class="incorrect">${incorrectLocation}</span>, not ${targetCountry}. Try again!<br><span class="hint">Hint: ${targetCountry} is approximately ${distance} km away.</span>`;
         popup = L.popup().setLatLng(latlng).setContent(popupText).openOn(map);
-        displayCountryShape(countryName, 'orangered').then(function() {
+        displayCountryShape(countryName, 'orangered').then(function () {
           state.wrong++;
           updateUiState();
         });
@@ -75,10 +82,10 @@ map.on('click', function(ev) {
 
 var wrongShape;
 
-function displayCountryShape(countryName, color) {
+function displayCountryShape(countryName, mycolor) {
   const queryParams = { 'accept-language': 'en', country: countryName, format: 'json', lang: 'en', polygon_geojson: 1, polygon_threshold: 0.01 };
-  return getJson('https://nominatim.openstreetmap.org/search', queryParams).then(function(places) {
-    const shapes = places.filter(function(place) {
+  return getJson('https://nominatim.openstreetmap.org/search', queryParams).then(function (places) {
+    const shapes = places.filter(function (place) {
       return place.geojson.type.endsWith("Polygon") && place.display_name === countryName;
     });
     if (shapes[0]) {
@@ -87,11 +94,11 @@ function displayCountryShape(countryName, color) {
         geometry: shapes[0].geojson
       };
       if (wrongShape) wrongShape.removeFrom(map);
-      if (color === 'darkviolet') {
-        L.geoJSON(geojson).setStyle({ color: color, fillColor: color, weight: 1 }).addTo(map);
-      } else if (color === 'orangered') {
-        wrongShape = L.geoJSON(geojson).setStyle({ color: color, fillColor: color, weight: 1 });
-        wrongShape.addTo(map);  
+      if (mycolor !== 'orangered') {
+        L.geoJSON(geojson).setStyle({ color: mycolor, fillColor: mycolor, weight: 1 }).addTo(map);
+      } else {
+        wrongShape = L.geoJSON(geojson).setStyle({ color: mycolor, fillColor: mycolor, weight: 1 });
+        wrongShape.addTo(map);
       }
     } else {
       console.error(`cannot display shape of country: ${countryName}`, places);
@@ -122,17 +129,17 @@ function normalizeCountryName(countryName) {
 }
 
 function shuffle(array) {
-    let counter = array.length;
+  let counter = array.length;
 
-    while (counter > 0) {
-        let index = Math.floor(Math.random() * counter);
-        counter--;
-        let temp = array[counter];
-        array[counter] = array[index];
-        array[index] = temp;
-    }
+  while (counter > 0) {
+    let index = Math.floor(Math.random() * counter);
+    counter--;
+    let temp = array[counter];
+    array[counter] = array[index];
+    array[index] = temp;
+  }
 
-    return array;
+  return array;
 }
 
 function buildUrl(baseUrl, queryParams) {
