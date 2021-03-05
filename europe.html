@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <script src="countries.js"></script>
+    <script src="countries_europe.js"></script>
     <script src="pacific.js"></script>
     <script src="country_boundary_eez.js"></script>
     <script defer src="index.js"></script>
     <link rel="stylesheet" href="geoquiz.css" />
-    <title>GeoQuiz</title>
+    <title>GeoQuiz - Europe</title>
 </head>
 
 <body>
@@ -39,20 +39,22 @@
 
 </body>
 <script>
-    const bounds = L.latLngBounds(L.latLng(-64, -135), L.latLng(84, 225));
+    const bounds = L.latLngBounds(L.latLng(65, -25), L.latLng(35, 55,));
     const map = L.map('map', {
         maxBounds: bounds
-    }).fitWorld();
-    var popup;
-
+    }).fitBounds([
+        [65, -25],
+        [35, 55]
+    ]);;
 
     L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/voyager_nolabels/{z}/{x}/{y}.png', {
         //bounds: bounds,
-        minZoom: 2,
+        minZoom: 4,
         maxZoom: 18,
         attribution: '&copy;<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy;<a href="https://cartodb.com/attributions">CartoDB</a>'
     }).addTo(map);
     L.control.scale().addTo(map);
+
 </script>
 
 </html>
