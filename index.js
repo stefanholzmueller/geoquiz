@@ -17,6 +17,22 @@ function randomColor() {
 L.geoJSON(pacific).setStyle(myStyle).addTo(map);
 L.geoJSON(pacific2).setStyle(myStyle).addTo(map);
 
+//Markers Islands
+L.marker([-0.533333, 166.916667]).addTo(map);//Nauru
+L.marker([-13.833333, 188.25]).addTo(map);//Samoa
+L.marker([-13.833333, -171.75]).addTo(map);//Samoa
+L.marker([-19.053889, 190.08]).addTo(map);//Niue
+L.marker([-19.053889, -169.92]).addTo(map);//Niue
+L.marker([-21.133333, 184.8]).addTo(map);//Tonga
+L.marker([-21.133333, -175.2]).addTo(map);//Tonga
+L.marker([-21.2, 200.233333]).addTo(map);//Cook Islands
+L.marker([-21.2, -159.766667]).addTo(map);//Cook Islands
+L.marker([-8.516667, 179.2]).addTo(map);//Tuvalu
+L.marker([1.466667, 173.033333]).addTo(map);//Kiribati
+L.marker([6.916667, 158.183333]).addTo(map);//Micronesia
+L.marker([7.116667, 171.066667]).addTo(map);//Marshal Islands
+L.marker([7.5, 134.616667]).addTo(map);//Palau
+
 const shuffledCountries = shuffle(countries);
 const state = {
   target: null,
