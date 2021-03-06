@@ -42,10 +42,10 @@
     const bounds = L.latLngBounds(L.latLng(20, 90), L.latLng(-50, 220,));
     const map = L.map('map', {
         maxBounds: bounds
-    }).fitBounds([
-        [20, 90],
-        [-50, 220]
-    ]);;
+    }).fitBounds(bounds);
+
+    // Show the bounds on screen
+    //L.rectangle(bounds, { color: "blue", weight: 1, fillOpacity: 0 }).addTo(map);
 
     L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/voyager_nolabels/{z}/{x}/{y}.png', {
         //bounds: bounds,
@@ -56,5 +56,4 @@
     L.control.scale().addTo(map);
 
 </script>
-
 </html>

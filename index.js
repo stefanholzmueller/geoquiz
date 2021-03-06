@@ -8,12 +8,11 @@ var myStyle = {
   dashArray: '2, 5'
 };
 
-const colori = ["red", "deeppink", "green", "darkcyan", "darkviolet", "blue", "dodgerblue", "gold", "orange"];
+const colori = ["chocolate", "darkorange", "gold", "greenyellow", "limegreen", "green", "darkcyan", "dodgerblue", "blue", "indigo", "darkviolet", "violet", "deeppink", "magenta", "red"];
 function randomColor() {
   const randomi = Math.floor(Math.random() * colori.length);
   return colori[randomi];
 }
-console.log(randomColor())
 
 L.geoJSON(pacific).setStyle(myStyle).addTo(map);
 L.geoJSON(pacific2).setStyle(myStyle).addTo(map);
@@ -71,7 +70,7 @@ map.on('click', function (ev) {
         const distance = Math.round(L.latLng(state.target.lat, state.target.lon).distanceTo(latlng) / 1000)
         const popupText = `You clicked on <span class="incorrect">${incorrectLocation}</span>, not ${targetCountry}. Try again!<br><span class="hint">Hint: ${targetCountry} is approximately ${distance} km away.</span>`;
         popup = L.popup().setLatLng(latlng).setContent(popupText).openOn(map);
-        displayCountryShape(countryName, 'orangered').then(function () {
+        displayCountryShape(countryName, 'black').then(function () {
           state.wrong++;
           updateUiState();
         });
@@ -94,7 +93,7 @@ function displayCountryShape(countryName, mycolor) {
         geometry: shapes[0].geojson
       };
       if (wrongShape) wrongShape.removeFrom(map);
-      if (mycolor !== 'orangered') {
+      if (mycolor !== 'black') {
         L.geoJSON(geojson).setStyle({ color: mycolor, fillColor: mycolor, weight: 1 }).addTo(map);
       } else {
         wrongShape = L.geoJSON(geojson).setStyle({ color: mycolor, fillColor: mycolor, weight: 1 });

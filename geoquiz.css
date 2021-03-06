@@ -39,7 +39,7 @@ body.start{
 
 /*Start page*/
 .intro{
-    cursor: pointer;
+    /*cursor: pointer; only activate when no map choices*/ 
     padding: 8vmin;
     background-color: white;
     border-radius: 25vmin;
