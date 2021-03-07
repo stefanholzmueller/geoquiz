@@ -12,7 +12,8 @@
 }
 
 .incorrect {
-    color: orangered;
+    color: red;
+    font-weight: bold;
 }
 
 .hint {

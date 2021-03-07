@@ -17,6 +17,12 @@ function randomColor() {
 L.geoJSON(pacific).setStyle(myStyle).addTo(map);
 L.geoJSON(pacific2).setStyle(myStyle).addTo(map);
 
+//Customize default Marker icon
+//L.Icon.Default.prototype.options.iconSize = [17, 27]; //orig [25, 41]
+//L.Icon.Default.prototype.options.shadowSize = [27, 27]; //orig [41, 41]
+//L.Icon.Default.prototype.options.iconAnchor = [17, 27]; //orig null
+
+
 //Markers Islands
 L.marker([-0.533333, 166.916667]).addTo(map);//Nauru
 L.marker([-13.833333, 188.25]).addTo(map);//Samoa
