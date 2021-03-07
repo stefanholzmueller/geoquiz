@@ -2,9 +2,7 @@
     height: 100vh;
     cursor: crosshair;
 }
-/*.leaflet-interactive {
-    cursor: crosshair;
-}*/
+
 .country-name,
 .correct {
     color: darkviolet;
@@ -85,7 +83,7 @@ button{
 @media screen and (max-width:768px) {
     .score{
         right: .75vmin;
-        top: 78vh;
+        top: calc(100vh - 105px);
      }
 }
 table{

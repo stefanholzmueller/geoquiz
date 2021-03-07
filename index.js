@@ -22,20 +22,22 @@ L.geoJSON(pacific2, {interactive:false}).setStyle(myStyle).addTo(map);
 //L.Icon.Default.prototype.options.shadowSize = [27, 27]; //orig [41, 41]
 //L.Icon.Default.prototype.options.iconAnchor = [17, 27]; //orig null
 
-
-
 //Markers Islands
 L.marker([-0.533333, 166.916667]).addTo(map).on('click', handleClick);//Nauru
 L.marker([-13.833333, 188.25]).addTo(map).on('click', handleClick);//Samoa
-L.marker([-13.833333, -171.75]).addTo(map).on('click', handleClick);//Samoa
+L.marker([-13.833333, -171.75]).addTo(map).on('click', handleClick);//Samoa+180
 L.marker([-19.053889, 190.08]).addTo(map).on('click', handleClick);//Niue
-L.marker([-19.053889, -169.92]).addTo(map).on('click', handleClick);//Niue
-L.marker([-21.133333, 184.8]).addTo(map).on('click', handleClick);//Tonga
+L.marker([-19.053889, -169.92]).addTo(map).on('click', handleClick);//Niue+180
+L.marker([-21.133333, 184.8]).addTo(map).on('click', handleClick);//Tonga+180
 L.marker([-21.133333, -175.2]).addTo(map).on('click', handleClick);//Tonga
-L.marker([-21.2, 200.233333]).addTo(map).on('click', handleClick);//Cook Islands
+L.marker([-21.2, 200.233333]).addTo(map).on('click', handleClick);//Cook Islands+180
 L.marker([-21.2, -159.766667]).addTo(map).on('click', handleClick);//Cook Islands
 L.marker([-8.516667, 179.2]).addTo(map).on('click', handleClick);//Tuvalu
 L.marker([1.466667, 173.033333]).addTo(map).on('click', handleClick);//Kiribati
+L.marker([-2.810556, -171.675556]).addTo(map).on('click', handleClick);//Kiribati2
+L.marker([-2.810556, 188.324444]).addTo(map).on('click', handleClick);//Kiribati2+180
+L.marker([1.866667, -157.4]).addTo(map).on('click', handleClick);//Kiribati3
+L.marker([1.866667, 202.6]).addTo(map).on('click', handleClick);//Kiribati3+180
 L.marker([6.916667, 158.183333]).addTo(map).on('click', handleClick);//Micronesia
 L.marker([7.116667, 171.066667]).addTo(map).on('click', handleClick);//Marshal Islands
 L.marker([7.5, 134.616667]).addTo(map).on('click', handleClick);//Palau
