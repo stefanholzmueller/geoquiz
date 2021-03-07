@@ -2,9 +2,9 @@
     height: 100vh;
     cursor: crosshair;
 }
-.leaflet-interactive {
+/*.leaflet-interactive {
     cursor: crosshair;
-}
+}*/
 .country-name,
 .correct {
     color: darkviolet;

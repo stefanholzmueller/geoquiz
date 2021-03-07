@@ -14,8 +14,8 @@ function randomColor() {
   return colori[randomi];
 }
 
-L.geoJSON(pacific).setStyle(myStyle).addTo(map);
-L.geoJSON(pacific2).setStyle(myStyle).addTo(map);
+L.geoJSON(pacific, {interactive:false}).setStyle(myStyle).addTo(map);
+L.geoJSON(pacific2, {interactive:false}).setStyle(myStyle).addTo(map);
 
 //Customize default Marker icon
 //L.Icon.Default.prototype.options.iconSize = [17, 27]; //orig [25, 41]
@@ -23,21 +23,22 @@ L.geoJSON(pacific2).setStyle(myStyle).addTo(map);
 //L.Icon.Default.prototype.options.iconAnchor = [17, 27]; //orig null
 
 
+
 //Markers Islands
-L.marker([-0.533333, 166.916667]).addTo(map);//Nauru
-L.marker([-13.833333, 188.25]).addTo(map);//Samoa
-L.marker([-13.833333, -171.75]).addTo(map);//Samoa
-L.marker([-19.053889, 190.08]).addTo(map);//Niue
-L.marker([-19.053889, -169.92]).addTo(map);//Niue
-L.marker([-21.133333, 184.8]).addTo(map);//Tonga
-L.marker([-21.133333, -175.2]).addTo(map);//Tonga
-L.marker([-21.2, 200.233333]).addTo(map);//Cook Islands
-L.marker([-21.2, -159.766667]).addTo(map);//Cook Islands
-L.marker([-8.516667, 179.2]).addTo(map);//Tuvalu
-L.marker([1.466667, 173.033333]).addTo(map);//Kiribati
-L.marker([6.916667, 158.183333]).addTo(map);//Micronesia
-L.marker([7.116667, 171.066667]).addTo(map);//Marshal Islands
-L.marker([7.5, 134.616667]).addTo(map);//Palau
+L.marker([-0.533333, 166.916667]).addTo(map).on('click', handleClick);//Nauru
+L.marker([-13.833333, 188.25]).addTo(map).on('click', handleClick);//Samoa
+L.marker([-13.833333, -171.75]).addTo(map).on('click', handleClick);//Samoa
+L.marker([-19.053889, 190.08]).addTo(map).on('click', handleClick);//Niue
+L.marker([-19.053889, -169.92]).addTo(map).on('click', handleClick);//Niue
+L.marker([-21.133333, 184.8]).addTo(map).on('click', handleClick);//Tonga
+L.marker([-21.133333, -175.2]).addTo(map).on('click', handleClick);//Tonga
+L.marker([-21.2, 200.233333]).addTo(map).on('click', handleClick);//Cook Islands
+L.marker([-21.2, -159.766667]).addTo(map).on('click', handleClick);//Cook Islands
+L.marker([-8.516667, 179.2]).addTo(map).on('click', handleClick);//Tuvalu
+L.marker([1.466667, 173.033333]).addTo(map).on('click', handleClick);//Kiribati
+L.marker([6.916667, 158.183333]).addTo(map).on('click', handleClick);//Micronesia
+L.marker([7.116667, 171.066667]).addTo(map).on('click', handleClick);//Marshal Islands
+L.marker([7.5, 134.616667]).addTo(map).on('click', handleClick);//Palau
 
 const shuffledCountries = shuffle(countries);
 const state = {
@@ -45,7 +46,7 @@ const state = {
   correct: 0,
   wrong: 0,
   skipped: 0
-}
+};
 
 function nextTarget() {
   if (shuffledCountries.length > 0) {
@@ -69,7 +70,7 @@ document.getElementById('skip').onclick = function () {
   nextTarget();
 }
 
-map.on('click', function (ev) {
+function handleClick(ev) {
   const latlng = ev.latlng;
   const queryParams = { 'accept-language': 'en', format: 'json', lat: latlng.wrap().lat, lon: latlng.wrap().lng, zoom: 3 };
   getJson('https://nominatim.openstreetmap.org/reverse', queryParams).then(function (place) {
@@ -99,7 +100,9 @@ map.on('click', function (ev) {
       }
     }
   })
-});
+};
+
+map.on('click', handleClick);
 
 var wrongShape;
 
