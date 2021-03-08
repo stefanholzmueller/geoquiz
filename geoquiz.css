@@ -2,9 +2,7 @@
     height: 100vh;
     cursor: crosshair;
 }
-.leaflet-interactive {
-    cursor: crosshair;
-}
+
 .country-name,
 .correct {
     color: green;
@@ -13,6 +11,7 @@
 
 .incorrect {
     color: red;
+    font-weight: bold;
 }
 
 .hint {
@@ -39,7 +38,7 @@ body.start{
 
 /*Start page*/
 .intro{
-    cursor: pointer;
+    cursor: pointer; /*only activate when no map choices*/
     padding: 8vmin;
     background-color: white;
     border-radius: 25vmin;
@@ -84,7 +83,7 @@ button{
 @media screen and (max-width:768px) {
     .score{
         right: .75vmin;
-        top: 78vh;
+        top: calc(100vh - 105px);
      }
 }
 table{
@@ -111,7 +110,7 @@ td:first-child{
 }
 th:nth-child(2),
 td:nth-child(2){
-    color: red;
+    color: orangered;
 }
 th:last-child,
 td:last-child{
