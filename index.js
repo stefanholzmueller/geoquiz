@@ -1,4 +1,18 @@
+const bounds = L.latLngBounds(L.latLng(-64, -180), L.latLng(84, 215));
+const map = L.map('map', {
+  maxBounds: bounds
+}).fitWorld();
 var popup;
+
+//Show the bounds on screen
+//L.rectangle(bounds, { color: "cornflowerblue", weight: 1, fillOpacity: 0 }).addTo(map);
+
+L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/voyager_nolabels/{z}/{x}/{y}.png', {
+  minZoom: 2,
+  maxZoom: 18,
+  attribution: '&copy;<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy;<a href="https://cartodb.com/attributions">CartoDB</a></br><a href="https://opendatacommons.org/licenses/odbl/">(ODbL) </a><a href="https://pacific-data.sprep.org/dataset/openstreetmap-data-pacific">OSM Data Pacific</a> &vert;<a href="http://www.opendefinition.org/licenses/cc-by-sa">(CC BY-SA 4.0) </a><a href="https://www.spc.int/">SPC</a>'
+}).addTo(map);
+L.control.scale().addTo(map);
 
 var myStyle = {
   color: "cornflowerblue",
@@ -8,19 +22,9 @@ var myStyle = {
   dashArray: '2, 5'
 };
 
-const colori = ["chocolate", "darkorange", "gold", "greenyellow", "limegreen", "green", "darkcyan", "dodgerblue", "blue", "indigo", "darkviolet", "violet", "deeppink", "magenta", "red"];
-function randomColor() {
-  const randomi = Math.floor(Math.random() * colori.length);
-  return colori[randomi];
-}
-
-L.geoJSON(pacific, {interactive:false}).setStyle(myStyle).addTo(map);
-L.geoJSON(pacific2, {interactive:false}).setStyle(myStyle).addTo(map);
-
-//Customize default Marker icon
-//L.Icon.Default.prototype.options.iconSize = [17, 27]; //orig [25, 41]
-//L.Icon.Default.prototype.options.shadowSize = [27, 27]; //orig [41, 41]
-//L.Icon.Default.prototype.options.iconAnchor = [17, 27]; //orig null
+//Pacific eez boundaries
+L.geoJSON(pacific, { interactive: false }).setStyle(myStyle).addTo(map);
+L.geoJSON(pacific2, { interactive: false }).setStyle(myStyle).addTo(map);
 
 //Markers Islands
 L.marker([-0.533333, 166.916667]).addTo(map).on('click', handleClick);//Nauru
@@ -86,7 +90,7 @@ function handleClick(ev) {
       if (countryName === targetCountry) {
         const popupText = `You correctly located <span class="correct">${targetCountry}</span>. Good job!`;
         popup = L.popup().setLatLng(latlng).setContent(popupText).openOn(map);
-        displayCountryShape(countryName, randomColor()).then(function () {
+        displayCountryShape(countryName, 'green').then(function () {
           state.correct++;
           nextTarget();
         });
@@ -95,7 +99,7 @@ function handleClick(ev) {
         const distance = Math.round(L.latLng(state.target.lat, state.target.lon).distanceTo(latlng) / 1000)
         const popupText = `You clicked on <span class="incorrect">${incorrectLocation}</span>, not ${targetCountry}. Try again!<br><span class="hint">Hint: ${targetCountry} is approximately ${distance} km away.</span>`;
         popup = L.popup().setLatLng(latlng).setContent(popupText).openOn(map);
-        displayCountryShape(countryName, 'black').then(function () {
+        displayCountryShape(countryName, 'red').then(function () {
           state.wrong++;
           updateUiState();
         });
@@ -120,8 +124,8 @@ function displayCountryShape(countryName, mycolor) {
         geometry: shapes[0].geojson
       };
       if (wrongShape) wrongShape.removeFrom(map);
-      if (mycolor !== 'black') {
-        L.geoJSON(geojson).setStyle({ color: mycolor, fillColor: mycolor, weight: 1 }).addTo(map);
+      if (mycolor !== 'red') {
+        L.geoJSON(geojson).setStyle({ color: mycolor, fillColor: mycolor, weight: 1,  interactive: false }).addTo(map);
       } else {
         wrongShape = L.geoJSON(geojson).setStyle({ color: mycolor, fillColor: mycolor, weight: 1 });
         wrongShape.addTo(map);

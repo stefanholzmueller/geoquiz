@@ -5,7 +5,7 @@
 
 .country-name,
 .correct {
-    color: darkviolet;
+    color: green;
     font-weight: bold;
 }
 
@@ -38,7 +38,7 @@ body.start{
 
 /*Start page*/
 .intro{
-    /*cursor: pointer; only activate when no map choices*/ 
+    cursor: pointer; /*only activate when no map choices*/
     padding: 8vmin;
     background-color: white;
     border-radius: 25vmin;
@@ -46,7 +46,7 @@ body.start{
     align-items: center;
 }
 .intro>h1{
-    color: darkviolet;
+    color: green;
     font-weight: bold;
 }
 
@@ -68,7 +68,7 @@ h3{
 button{
     cursor: pointer;
     font-size: initial;
-    background-color: darkviolet;
+    background-color: green;
     color: white;
     border-style: none;
     border-radius: .3em;
@@ -105,7 +105,7 @@ td{
 }
 th:first-child,
 td:first-child{
-    color: darkviolet;
+    color: green;
     border-right: .5px solid #ddd;
 }
 th:nth-child(2),
@@ -116,22 +116,4 @@ th:last-child,
 td:last-child{
     color: gray;
     border-left: .5px solid #ddd;
-}
-/*Challenge List*/
-nav{
-    margin-bottom: 1em;
-}
-nav>a{
-    text-decoration: none;
-    color: darkviolet;
-    padding: .1em .2em;
-}
-nav>a:hover{
-    background-color: darkviolet;
-    color: white;
-    border-radius: .1em;
-
-    border-style: none;
-    border-radius: .3em;
-    padding: .1em .2em;
 }
